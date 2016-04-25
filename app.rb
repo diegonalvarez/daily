@@ -14,17 +14,11 @@ class App < Sinatra::Base
   # Load core configuration file
   config_file 'config/app_config.yml'
 
-  configure :development do
-    DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/base.db")
-  end
-
-  configure :production do
-    DataMapper.setup(:default, ENV['HEROKU_POSTGRESQL_RED_URL'])
-  end
-
   use Rack::Auth::Basic, "Protected Area" do |username, password|
     username == settings.username && password == settings.password
   end
+
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/#{settings.database}.db")
 
   run! if app_file == $0
 end
