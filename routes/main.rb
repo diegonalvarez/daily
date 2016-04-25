@@ -6,7 +6,7 @@ class App
   end
 
   put "/daily/add" do
-    @tasks = Task.all(:date => Date.today, :app_key => params[:app_key], :published => false).count
+    @tasks = Task.all(:date => Date.today, :app_key => params[:app_key]).count
     if @tasks > 1
       halt 500 , "Only can add two dailys for day"
     end
