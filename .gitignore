@@ -2,4 +2,3 @@
 .bundle/
 config/app_config.yml
 *.db
-Gemfile.lock
