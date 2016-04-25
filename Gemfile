@@ -6,7 +6,6 @@ gem 'sinatra'
 gem 'json'
 gem 'hipchat'
 gem 'data_mapper'
-gem 'dm-sqlite-adapter'
 gem 'sinatra-contrib'
 
 group :production do
