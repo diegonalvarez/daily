@@ -1,0 +1,5 @@
+database         : development
+room             : room hipchat
+notificationname : foo
+username         : foo
+password         : bar
