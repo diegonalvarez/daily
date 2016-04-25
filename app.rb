@@ -6,6 +6,7 @@ require 'sinatra/config_file'
 require 'json'
 require 'hipchat'
 require 'data_mapper'
+require './environments'
 
 class App < Sinatra::Base
 
@@ -17,8 +18,6 @@ class App < Sinatra::Base
   use Rack::Auth::Basic, "Protected Area" do |username, password|
     username == settings.username && password == settings.password
   end
-
-  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/#{settings.database}.db")
 
   run! if app_file == $0
 end
