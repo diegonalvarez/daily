@@ -1,8 +1,16 @@
 class App
 
-  get "/daily/list/:app_key" do
-    @tasks = Task.all(:date => Date.today, :app_key => params[:app_key], :published => false)
-    @tasks.to_json
+  register Sinatra::Subdomain
+
+  get "/" do
+    p "begin 1"
+  end
+
+  subdomain :api do
+    get "/daily/list/:app_key" do
+      @tasks = Task.all(:date => Date.today, :app_key => params[:app_key], :published => false)
+      @tasks.to_json
+    end
   end
 
   put "/daily/add" do

@@ -6,6 +6,7 @@ require 'sinatra/config_file'
 require 'json'
 require 'hipchat'
 require 'data_mapper'
+require "sinatra/subdomain"
 
 class App < Sinatra::Base
 
