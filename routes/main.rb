@@ -4,6 +4,11 @@ class App
     p "begin 1"
   end
 
+  not_found do
+    content_type :json
+    halt 404, { error: 'URL not found' }.to_json
+  end
+
   subdomain :api do
     get "/daily/list/:app_key" do
       @tasks = Task.all(:date => Date.today, :app_key => params[:app_key], :published => false)
@@ -23,6 +28,8 @@ class App
 
   subdomain :api do
     get "/send" do
+      @notification_name = settings.notificationname
+      @room = settings.room
       daily = Daily.new
       @tasks = Task.all(:date => Date.today, :published => false)
       @tasks.each do |item|
