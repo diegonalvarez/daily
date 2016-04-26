@@ -11,6 +11,7 @@ require "sinatra/subdomain"
 class App < Sinatra::Base
 
   register Sinatra::ConfigFile
+  register Sinatra::Subdomain
 
   # Load core configuration file
   config_file 'config/app_config.yml'

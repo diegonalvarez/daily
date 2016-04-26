@@ -1,7 +1,5 @@
 class App
 
-  register Sinatra::Subdomain
-
   get "/" do
     p "begin 1"
   end
@@ -13,21 +11,25 @@ class App
     end
   end
 
-  put "/daily/add" do
-    @tasks = Task.all(:date => Date.today, :app_key => params[:app_key]).count
-    if @tasks > 1
-      halt 500 , "Only can add two dailys for day"
+  subdomain :api do
+    put "/daily/add" do
+      @tasks = Task.all(:date => Date.today, :app_key => params[:app_key]).count
+      if @tasks > 1
+        halt 500 , "Only can add two dailys for day"
+      end
+      Task.create(text: params[:text], app_key: params[:app_key])
     end
-    Task.create(text: params[:text], app_key: params[:app_key])
   end
 
-  get "/send" do
-    daily = Daily.new
-    @tasks = Task.all(:date => Date.today, :published => false)
-    @tasks.each do |item|
-      daily.send(item.app_key, item.text)
-      item.published = true
-      item.save
+  subdomain :api do
+    get "/send" do
+      daily = Daily.new
+      @tasks = Task.all(:date => Date.today, :published => false)
+      @tasks.each do |item|
+        daily.send(item.app_key, item.text)
+        item.published = true
+        item.save
+      end
     end
   end
 end
